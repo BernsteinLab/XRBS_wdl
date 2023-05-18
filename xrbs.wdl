@@ -4,10 +4,11 @@ workflow XRBS {
 
 	input {
 		File fastq1
-		File fastq2
+		File fastq2?
 		File reference
 		String adapter
         String library
+        Boolean paired
 	}
 
 	call fastqc { input:
@@ -15,11 +16,16 @@ workflow XRBS {
         fastq2 = fastq2
 	}
 
-	call trimming {input: 
-						fastq1 = fastq1, 
-						fastq2 = fastq2, 
-						adapter = adapter
-					}
+    if (paired){
+        call trimming {input: 
+                        fastq1 = fastq1, 
+                        fastq2 = fastq2, 
+                        adapter = adapter
+                    }
+    }
+
+    if (!paired){
+    }
 
 	call fqconv {input: 
 						fastq1 = trimming.fastq1, 
