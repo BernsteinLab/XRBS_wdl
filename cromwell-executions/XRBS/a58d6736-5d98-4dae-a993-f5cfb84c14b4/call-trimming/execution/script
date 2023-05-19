@@ -1,0 +1,38 @@
+#!/bin/bash
+
+cd /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution
+tmpDir=$(mkdir -p "/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/tmp.6627e589" && echo "/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/tmp.6627e589")
+chmod 777 "$tmpDir"
+export _JAVA_OPTIONS=-Djava.io.tmpdir="$tmpDir"
+export TMPDIR="$tmpDir"
+export HOME="$HOME"
+(
+cd /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution
+
+)
+outa58d6736="${tmpDir}/out.$$" erra58d6736="${tmpDir}/err.$$"
+mkfifo "$outa58d6736" "$erra58d6736"
+trap 'rm "$outa58d6736" "$erra58d6736"' EXIT
+touch '/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/stdout' '/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/stderr'
+tee '/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/stdout' < "$outa58d6736" &
+tee '/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/stderr' < "$erra58d6736" >&2 &
+(
+cd /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution
+
+
+~/.local/bin/cutadapt --discard -a GCTCTTCCGATCT -o small-xrbs_R2.cutadapt.fastq.gz -p small-xrbs_R1.cutadapt.fastq.gz /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/inputs/1145509541/BL081_3_1_S1_R2_001_subsampled.fastq.gz /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/inputs/1145509541/BL081_3_1_S1_R1_001_subsampled.fastq.gz > small-xrbs_cutadapt_report.txt
+software/TrimGalore-0.6.5/trim_galore --path_to_cutadapt ~/.local/bin/cutadapt --paired --illumina --nextseq 20 small-xrbs_R1.cutadapt.fastq.gz small-xrbs_R2.cutadapt.fastq.gz
+)  > "$outa58d6736" 2> "$erra58d6736"
+echo $? > /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/rc.tmp
+(
+# add a .file in every empty directory to facilitate directory delocalization on the cloud
+cd /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution
+find . -type d -exec sh -c '[ -z "$(ls -A '"'"'{}'"'"')" ] && touch '"'"'{}'"'"'/.file' \;
+)
+(
+cd /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution
+sync
+
+
+)
+mv /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/rc.tmp /cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/rc

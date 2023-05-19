@@ -1,0 +1,3 @@
+#!/bin/bash
+'/bin/bash' '/Users/kpk/Desktop/XRBS_wdl/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/script.submit' < /dev/null || { rc=$?; if [ "$rc" -gt "128" ]; then echo $rc; else echo -1; fi } > /Users/kpk/Desktop/XRBS_wdl/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/rc &
+echo $!

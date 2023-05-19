@@ -1,0 +1,2 @@
+Specified output directory 'small-xrbs_fastqc_out' does not exist
+/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-fastqc/execution/script: line 24: zip: command not found
