@@ -67,10 +67,11 @@ workflow XRBS {
 task fastqc {
     input {
         File fastq1
-        File? fastq2
+        File fastq2
         String sample_id
     }
     command {
+        mkdir ${sample_id}_fastqc_out
         fastqc -o ${sample_id}_fastqc_out fastq1 fastq2
         zip ${sample_id}_fastqc_out
     }
@@ -89,8 +90,8 @@ task trimming {
         String sample_id
     }
     command {
-        ~/.local/bin/cutadapt --discard -a GCTCTTCCGATCT -o ${sample_id}_R2.cutadapt.fastq.gz -p ${sample_id}_R1.cutadapt.fastq.gz ${fastq2_in} ${fastq1_in} > ${sample_id}_cutadapt_report.txt
-        software/TrimGalore-0.6.5/trim_galore --path_to_cutadapt ~/.local/bin/cutadapt --paired --illumina --nextseq 20 ${sample_id}_R1.cutadapt.fastq.gz ${sample_id}_R2.cutadapt.fastq.gz
+        cutadapt --discard -a GCTCTTCCGATCT -o ${sample_id}_R2.cutadapt.fastq.gz -p ${sample_id}_R1.cutadapt.fastq.gz ${fastq2_in} ${fastq1_in} > ${sample_id}_cutadapt_report.txt
+        TrimGalore-0.6.10/trim_galore --path_to_cutadapt cutadapt --paired --illumina --nextseq 20 ${sample_id}_R1.cutadapt.fastq.gz ${sample_id}_R2.cutadapt.fastq.gz
     }
     runtime {
         docker: "salvacasani/trimming:latest"

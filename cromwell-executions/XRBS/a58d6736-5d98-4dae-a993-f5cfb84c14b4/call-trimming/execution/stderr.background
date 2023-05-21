@@ -1,2 +1,0 @@
-/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/script: line 23: /root/.local/bin/cutadapt: No such file or directory
-/cromwell-executions/XRBS/a58d6736-5d98-4dae-a993-f5cfb84c14b4/call-trimming/execution/script: line 24: software/TrimGalore-0.6.5/trim_galore: No such file or directory

@@ -4,7 +4,8 @@ MAINTAINER Jeltje van Baren, jeltje.van.baren@gmail.com
 
 # Install tools
 RUN apt-get update && apt-get install --yes openjdk-7-jre-headless \
-    unzip
+    unzip \
+    zip
 
 # set location
 ENV FASTQC_LOC http://www.bioinformatics.babraham.ac.uk/projects/fastqc
