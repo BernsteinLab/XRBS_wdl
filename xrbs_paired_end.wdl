@@ -140,7 +140,8 @@ task align {
         GENOME_INDEX_FA="$(dirname $BWT)"/"$(basename $BWT .bwt)"
         echo "Using bwa index: $GENOME_INDEX_FA"
 
-        bwa mem -t 4 -p -M -T 0 $GENOME_INDEX_FA ${fastq} | samtools view -Sb - > ${sample_id}.reads.conv.bam
+        bwa mem -t 4 -p -M -T 0 $GENOME_INDEX_FA ${fastq} > align.sam
+        samtools view -Sb align.sam > ${sample_id}.reads.conv.bam
 
     }
     runtime {

@@ -11,7 +11,8 @@ RUN apt-get update && \
                         liblzma-dev \
                         libssl-dev \
 			libz-dev \
-			zlib1g-dev
+			zlib1g-dev \
+			samtools
                                                 
 # Install bwa
 RUN cd /tmp && \
