@@ -13,11 +13,11 @@ workflow XRBS {
         File reference_positions
 	}
 
-	call fastqc { input:
-		fastq1 = fastq1,
-        fastq2 = fastq2,
-        sample_id = sample_id
-	}
+#	call fastqc { input:
+#		fastq1 = fastq1,
+#        fastq2 = fastq2,
+#        sample_id = sample_id
+#	}
 
     call trimming {input: 
                     fastq1_in = fastq1, 
@@ -59,7 +59,7 @@ workflow XRBS {
         File meth_metrics = methylation.metrics
         File flagstat = bconv.flagstat
         File bconv_metrics = bconv.metrics
-        File fastqc_out = fastqc.fastqc_out
+ #       File fastqc_out = fastqc.fastqc_out
         File cutadapt_report = trimming.cutadapt_report
 	}
 }
@@ -91,7 +91,7 @@ task trimming {
     }
     command {
         cutadapt --discard -a GCTCTTCCGATCT -o ${sample_id}_R2.cutadapt.fastq.gz -p ${sample_id}_R1.cutadapt.fastq.gz ${fastq2_in} ${fastq1_in} > ${sample_id}_cutadapt_report.txt
-        TrimGalore-0.6.10/trim_galore --path_to_cutadapt cutadapt --paired --illumina --nextseq 20 ${sample_id}_R1.cutadapt.fastq.gz ${sample_id}_R2.cutadapt.fastq.gz
+        /TrimGalore-0.6.10/trim_galore --path_to_cutadapt cutadapt --paired --illumina --nextseq 20 ${sample_id}_R1.cutadapt.fastq.gz ${sample_id}_R2.cutadapt.fastq.gz
     }
     runtime {
         docker: "salvacasani/trimming:latest"
@@ -111,7 +111,7 @@ task fqconv {
         String sample_id
     }
     command {
-        methylCtools fqconv -1 ${fastq1} -2 ${fastq2} ${sample_id}.conv.fq
+        /methylCtools/methylCtools fqconv -1 ${fastq1} -2 ${fastq2} ${sample_id}.conv.fq
 
     }
     runtime {
