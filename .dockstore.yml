@@ -1,0 +1,6 @@
+version: 1.0
+workflows:
+   - subclass: WDL
+     primaryDescriptorPath: /xrbs_paired_end.wdl
+     testParameterFiles:
+     - /test_data/small_xrbs.json
