@@ -162,7 +162,7 @@ task bconv {
         String sample_id
     }
     command {
-        methylCtools bconv bam -m ${sample_id}.human.conv.sort.metrics.txt - | samtools sort -T ${sample_id}.human.sort -@ 4 - > ${sample_id}.sorted.bam
+        /methylCtools/methylCtools bconv bam -m ${sample_id}.human.conv.sort.metrics.txt - | samtools sort -T ${sample_id}.human.sort -@ 4 - > ${sample_id}.sorted.bam
         samtools index ${sample_id}.sorted.bam
         samtools flagstat ${sample_id}.sorted.bam > ${sample_id}.sorted.bam.flagstat
     }
@@ -208,7 +208,7 @@ task methylation {
         String sample_id
     }
     command {
-        methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics reference_pos filtered_bam - | bgzip > ${sample_id}.call.gz
+        /methylCtools/methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics reference_pos filtered_bam - | bgzip > ${sample_id}.call.gz
 
     }
     runtime {
