@@ -1,3 +1,4 @@
-test_data
+test_data/genomes
+test_data/*fastq.gz
 cromwell-executions
 cromwell-workflow-logs
