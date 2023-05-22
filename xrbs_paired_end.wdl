@@ -11,6 +11,7 @@ workflow XRBS {
 		File reference
         File reference_index
         File reference_positions
+        File reference_positions_index
 	}
 
 	call fastqc { input:
