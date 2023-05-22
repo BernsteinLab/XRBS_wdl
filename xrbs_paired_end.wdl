@@ -73,7 +73,7 @@ task fastqc {
     command {
         mkdir ${sample_id}_fastqc_out
         fastqc -o ${sample_id}_fastqc_out ${fastq1} ${fastq2}
-        zip ${sample_id}_fastqc_out
+        zip -r ${sample_id}_fastqc_out.zip ${sample_id}_fastqc_out
     }
     runtime {
         docker: "salvacasani/fastqc"
@@ -162,7 +162,7 @@ task bconv {
         String sample_id
     }
     command {
-        /methylCtools/methylCtools bconv bam -m ${sample_id}.human.conv.sort.metrics.txt - | samtools sort -T ${sample_id}.human.sort -@ 4 - > ${sample_id}.sorted.bam
+        /methylCtools/methylCtools bconv ${bam} -m ${sample_id}.human.conv.sort.metrics.txt - | samtools sort -T ${sample_id}.human.sort -@ 4 - > ${sample_id}.sorted.bam
         samtools index ${sample_id}.sorted.bam
         samtools flagstat ${sample_id}.sorted.bam > ${sample_id}.sorted.bam.flagstat
     }
