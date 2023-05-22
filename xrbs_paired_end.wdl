@@ -48,7 +48,7 @@ workflow XRBS {
 #	}
 
 	call methylation {input: 
-		#bam = filter.filter_bam_out,
+		#filtered_bam = filter.filter_bam_out,
         filtered_bam = bconv.sorted_bam_out,
 		reference_pos = reference_positions,
         sample_id = sample_id
@@ -186,7 +186,7 @@ task filter {
         String sample_id
     }
     command {
-        Rscript filter.vh20200112.R  sorted_bam
+        Rscript filter.vh20200112.R  ${sorted_bam}
 
     }
     runtime {
@@ -208,7 +208,7 @@ task methylation {
         String sample_id
     }
     command {
-        /methylCtools/methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics reference_pos filtered_bam - | bgzip > ${sample_id}.call.gz
+        /methylCtools/methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics ${reference_pos} ${filtered_bam} - | bgzip > ${sample_id}.call.gz
 
     }
     runtime {
