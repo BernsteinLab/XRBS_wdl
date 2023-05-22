@@ -13,11 +13,11 @@ workflow XRBS {
         File reference_positions
 	}
 
-	call fastqc { input:
-		fastq1 = fastq1,
-        fastq2 = fastq2,
-        sample_id = sample_id
-	}
+#	call fastqc { input:
+#        fastq1 = fastq1,
+#        fastq2 = fastq2,
+#        sample_id = sample_id
+    }
 
     call trimming {input: 
                     fastq1_in = fastq1, 
@@ -59,7 +59,7 @@ workflow XRBS {
         File meth_metrics = methylation.metrics
         File flagstat = bconv.flagstat
         File bconv_metrics = bconv.metrics
-        File fastqc_out = fastqc.fastqc_out
+#        File fastqc_out = fastqc.fastqc_out
         File cutadapt_report = trimming.cutadapt_report
 	}
 }
