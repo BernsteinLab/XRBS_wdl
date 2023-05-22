@@ -11,7 +11,6 @@ workflow XRBS {
 		File reference
         File reference_index
         File reference_positions
-        File reference_positions_index
 	}
 
 	call fastqc { input:
@@ -209,7 +208,8 @@ task methylation {
         String sample_id
     }
     command {
-        /methylCtools/methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics ${reference_pos} ${filtered_bam} - | bgzip > ${sample_id}.call.gz
+        unzip ${reference_pos}
+        /methylCtools/methylCtools bcall --trimPE --metrics ${sample_id}.human.sort.filter.call.metrics GRCh38.pos.gz ${filtered_bam} - | bgzip > ${sample_id}.call.gz
 
     }
     runtime {
