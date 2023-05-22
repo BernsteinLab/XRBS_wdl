@@ -17,7 +17,7 @@ workflow XRBS {
 #        fastq1 = fastq1,
 #        fastq2 = fastq2,
 #        sample_id = sample_id
-    }
+#    }
 
     call trimming {input: 
                     fastq1_in = fastq1, 
