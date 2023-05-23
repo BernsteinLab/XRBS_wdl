@@ -61,12 +61,6 @@ workflow XRBS {
         sample_id = sample_id,
         methylation_call = methylation.calls
     }
-        File fastq1
-        File trimmed_file
-        File stats_file
-        String sample_id
-        File methylation_call
-    }
 
 	output {
 		File meth_calls = methylation.calls
