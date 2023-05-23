@@ -48,13 +48,13 @@ workflow XRBS {
 	}
 
 	call methylation {input: 
-		filtered_bam = filter.filter_bam_out,
+		filtered_bam = filter.bam,
         #filtered_bam = bconv.sorted_bam_out,
 		reference_pos = reference_positions,
         sample_id = sample_id
 	}
 
-    call qc_stats {input: 
+    call qc_stats {input:
         fastq1 = fastq1,
         trimmed_file = trimming.fastq1,
         stats_file = filter.stats,
@@ -212,7 +212,7 @@ task filter {
         disks: "local-disk " + "500" + " SSD"
     }
     output {
-        File fastq = "${sample_id}.filter.sorted.bam"
+        File bam = "${sample_id}.filter.sorted.bam"
         File stats = "${sample_id}.human.sort.bam.filter.stats"
     }
 }
