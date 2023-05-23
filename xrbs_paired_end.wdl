@@ -54,7 +54,7 @@ workflow XRBS {
         sample_id = sample_id
 	}
 
-    task qc_stats {input: 
+    call qc_stats {input: 
         fastq1 = fastq1,
         trimmed_file = trimming.fastq1,
         stats_file = filter.stats,
