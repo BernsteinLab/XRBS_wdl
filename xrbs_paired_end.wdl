@@ -203,7 +203,6 @@ task filter {
     }
     command {
         Rscript filter.vh20200112.R  ${sorted_bam}
-
     }
     runtime {
         docker: "salvacasani/r_filter:latest"
@@ -212,11 +211,10 @@ task filter {
         disks: "local-disk " + "500" + " SSD"
     }
     output {
-        File bam = "${sample_id}.filter.sorted.bam"
-        File stats = "${sample_id}.human.sort.bam.filter.stats"
+        File bam = "${sample_id}.sorted.bam.filter.bam"
+        File stats = "${sample_id}.sorted.bam.filter.stats"
     }
 }
-
 
 task methylation {
     input {
