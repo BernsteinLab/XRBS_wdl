@@ -42,17 +42,31 @@ workflow XRBS {
         sample_id = sample_id
 	}
 
-#	call filter {input: 
-#		bam = bconv.sorted_bam_out,
-#        sample_id = sample_id
-#	}
+	call filter {input: 
+		bam = bconv.sorted_bam_out,
+        sample_id = sample_id
+	}
 
 	call methylation {input: 
-		#filtered_bam = filter.filter_bam_out,
-        filtered_bam = bconv.sorted_bam_out,
+		filtered_bam = filter.filter_bam_out,
+        #filtered_bam = bconv.sorted_bam_out,
 		reference_pos = reference_positions,
         sample_id = sample_id
 	}
+
+    task qc_stats {input: 
+        fastq1 = fastq1,
+        trimmed_file = trimming.fastq1,
+        stats_file = filter.stats,
+        sample_id = sample_id,
+        methylation_call = methylation.calls
+    }
+        File fastq1
+        File trimmed_file
+        File stats_file
+        String sample_id
+        File methylation_call
+    }
 
 	output {
 		File meth_calls = methylation.calls
@@ -61,6 +75,14 @@ workflow XRBS {
         File bconv_metrics = bconv.metrics
         File fastqc_out = fastqc.fastqc_out
         File cutadapt_report = trimming.cutadapt_report
+
+        String reads_number = qc_stats.reads_number
+        String trimmed_number = qc_stats.trimmed_number
+        String mapped_unique = qc_stats.mapped_unique
+        String msp1Pos_filtered = qc_stats.msp1Pos_filtered
+        String size_filtered = qc_stats.size_filtered
+        String dup_filtered = qc_stats.dup_filtered
+        String cpg_sites = qc_stats.cpg_sites
 	}
 }
 
@@ -197,6 +219,7 @@ task filter {
     }
     output {
         File fastq = "${sample_id}.filter.sorted.bam"
+        File stats = "${sample_id}.human.sort.bam.filter.stats"
     }
 }
 
@@ -224,5 +247,47 @@ task methylation {
     }
 }
 
+
+task qc_stats {
+    input {
+        File fastq1
+        File trimmed_file
+        File stats_file
+        String sample_id
+        File methylation_call
+    }
+    command {
+
+        reads_number=$(echo $(zcat ${fastq1}|wc -l)/4|bc);
+
+        trimmed=$(echo $(zcat ${trimmed_file}|wc -l)/4|bc);
+
+        mapped_unique=$(echo $(cat ${stats_file} | sed 1d | cut -f 2));
+
+        msp1Pos_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 5));
+
+        size_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 6));
+
+        dup_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 7));
+
+        cpg_sites=$(echo $(zcat ${methylation_call} | wc -l));
+
+    }
+    runtime {
+        docker: "salvacasani/r_filter:latest"
+        bootDiskSizeGb: 40
+        memory: "20GB"
+        disks: "local-disk " + "500" + " SSD"
+    }
+    output {
+        String reads_number = "${reads_number}"
+        String trimmed_number = "${trimmed_number}"
+        String mapped_unique = "${mapped_unique}"
+        String msp1Pos_filtered = "${msp1Pos_filtered}"
+        String size_filtered = "${size_filtered}"
+        String dup_filtered = "${dup_filtered}"
+        String cpg_sites = "${cpg_sites}"
+    }
+}
 
 
