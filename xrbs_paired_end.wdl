@@ -206,13 +206,12 @@ task filter {
     }
     command {
         Rscript /home/filter.vh20200112.R ${sorted_bam}
-        ls
     }
     runtime {
         docker: "salvacasani/r_filter:latest"
         bootDiskSizeGb: 40
-        memory: "100GB"
-        disks: "local-disk " + "500" + " SSD"
+        memory: "200GB"
+        disks: "local-disk " + "1000" + " SSD"
     }
     output {
         File bam = "${sample_id}.sorted.bam.filter.bam"
