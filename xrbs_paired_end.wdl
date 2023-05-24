@@ -210,7 +210,7 @@ task filter {
     runtime {
         docker: "salvacasani/r_filter:latest"
         bootDiskSizeGb: 80
-        memory: "100GB"
+        memory: "300GB"
         disks: "local-disk " + "500" + " SSD"
     }
     output {
