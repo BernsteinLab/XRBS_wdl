@@ -44,6 +44,7 @@ workflow XRBS {
 
 	call filter {input: 
 		sorted_bam = bconv.sorted_bam_out,
+        sorted_bam_index = bconv.sorted_bam_index,
         sample_id = sample_id
 	}
 
@@ -190,6 +191,7 @@ task bconv {
     }
     output {
         File sorted_bam_out = "${sample_id}.sorted.bam"
+        File sorted_bam_index = "${sample_id}.sorted.bam.bai"
         File metrics = "${sample_id}.human.conv.sort.metrics.txt"
         File flagstat = "${sample_id}.sorted.bam.flagstat"
     }
@@ -199,6 +201,7 @@ task bconv {
 task filter {
     input {
         File sorted_bam
+        File sorted_bam_index
         String sample_id
     }
     command {
