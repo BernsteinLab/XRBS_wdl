@@ -209,9 +209,9 @@ task filter {
     }
     runtime {
         docker: "salvacasani/r_filter:latest"
-        bootDiskSizeGb: 40
-        memory: "1000GB"
-        disks: "local-disk " + "1000" + " SSD"
+        bootDiskSizeGb: 80
+        memory: "100GB"
+        disks: "local-disk " + "500" + " SSD"
     }
     output {
         File bam = "${sample_id}.sorted.bam.filter.bam"
