@@ -30,7 +30,7 @@ for(i in names(chr)) {
   #chrL corresponds to lambda DNA
   message("  finding MspI cut sites: ", appendLF = FALSE)
   if(i == "chrL") {
-    m <- matchPattern("CCGG", import("NC_001416.1.fasta")[[1]])
+    m <- matchPattern("CCGG", import("/home/NC_001416.1.fasta")[[1]])
   } else {
     m <- matchPattern("CCGG", Hsapiens[[i]])
   }
@@ -182,7 +182,7 @@ for(i in names(chr)) {
 # write final stats
 message("- merging bam files: ", appendLF = FALSE)
 write.table(t(unlist(r)), row.names=tail(strsplit(f, "/")[[1]], 1), file=paste0(f, ".filter.stats"), sep="\t", quote=FALSE)
-
+print(paste0(f, ".filter.stats"))
 write.table(data.frame(do.call(rbind, r.pos), strand="+", do.call(rbind, r.cov.plus)), file=paste0(f, ".filter.cov_plus"), sep="\t", quote=FALSE, row.names=FALSE)
 write.table(data.frame(do.call(rbind, r.pos), strand="-", do.call(rbind, r.cov.minus)), file=paste0(f, ".filter.cov_minus"), sep="\t", quote=FALSE, row.names=FALSE)
 
