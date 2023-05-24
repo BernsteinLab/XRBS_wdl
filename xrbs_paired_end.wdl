@@ -202,7 +202,7 @@ task filter {
         String sample_id
     }
     command {
-        Rscript filter.vh20200112.R ${sorted_bam}
+        Rscript /filter.vh20200112.R ${sorted_bam}
     }
     runtime {
         docker: "salvacasani/r_filter:latest"
