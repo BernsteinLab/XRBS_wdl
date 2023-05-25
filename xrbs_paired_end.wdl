@@ -254,19 +254,19 @@ task qc_stats {
     }
     command {
 
-        reads_number=$(echo $(zcat ${fastq1}|wc -l)/4|bc);
+        reads_number=(echo (zcat ${fastq1}|wc -l)/4|bc)
 
-        trimmed=$(echo $(zcat ${trimmed_file}|wc -l)/4|bc);
+        trimmed=$(echo (zcat {trimmed_file}|wc -l)/4|bc)
 
-        mapped_unique=$(echo $(cat ${stats_file} | sed 1d | cut -f 2));
+        mapped_unique=(echo (cat ${stats_file} | sed 1d | cut -f 2))
 
-        msp1Pos_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 5));
+        msp1Pos_filtered=(echo (cat ${stats_file} | sed 1d | cut -f 5))
 
-        size_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 6));
+        size_filtered=(echo (cat ${stats_file} | sed 1d | cut -f 6))
 
-        dup_filtered=$(echo $(cat ${stats_file} | sed 1d | cut -f 7));
+        dup_filtered=(echo (cat ${stats_file} | sed 1d | cut -f 7))
 
-        cpg_sites=$(echo $(zcat ${methylation_call} | wc -l));
+        cpg_sites=(echo (zcat ${methylation_call} | wc -l))
 
     }
     runtime {
