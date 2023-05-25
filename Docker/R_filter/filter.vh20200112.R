@@ -181,13 +181,12 @@ for(i in names(chr)) {
 
 # write final stats
 message("- merging bam files: ", appendLF = FALSE)
-write.table(t(unlist(r)), row.names=tail(strsplit(f, "/")[[1]], 1), file=paste0(f, ".filter.stats"), sep="\t", quote=FALSE)
-print(paste0(f, ".filter.stats"))
-write.table(data.frame(do.call(rbind, r.pos), strand="+", do.call(rbind, r.cov.plus)), file=paste0(f, ".filter.cov_plus"), sep="\t", quote=FALSE, row.names=FALSE)
-write.table(data.frame(do.call(rbind, r.pos), strand="-", do.call(rbind, r.cov.minus)), file=paste0(f, ".filter.cov_minus"), sep="\t", quote=FALSE, row.names=FALSE)
+write.table(t(unlist(r)), row.names=tail(strsplit(f, "/")[[1]], 1), file=paste0(tail(strsplit(f, "/")[[1]], 1), ".filter.stats"), sep="\t", quote=FALSE)
+write.table(data.frame(do.call(rbind, r.pos), strand="+", do.call(rbind, r.cov.plus)), file=paste0(tail(strsplit(f, "/")[[1]], 1), ".filter.cov_plus"), sep="\t", quote=FALSE, row.names=FALSE)
+write.table(data.frame(do.call(rbind, r.pos), strand="-", do.call(rbind, r.cov.minus)), file=paste0(tail(strsplit(f, "/")[[1]], 1), ".filter.cov_minus"), sep="\t", quote=FALSE, row.names=FALSE)
 
 # merge bam
-mergeBam(files = paste0(f, ".", names(chr), ".filter.bam"), destination = paste0(f, ".filter.bam"), indexDestination = TRUE, overwrite = TRUE)
+mergeBam(files = paste0(f, ".", names(chr), ".filter.bam"), destination = paste0(tail(strsplit(f, "/")[[1]], 1), ".filter.bam"), indexDestination = TRUE, overwrite = TRUE)
 file.remove(paste0(f, ".", names(chr), ".filter.bam"))
 message("done")
 
