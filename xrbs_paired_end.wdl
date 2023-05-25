@@ -206,6 +206,7 @@ task filter {
     }
     command {
         Rscript /home/filter.vh20200112.R ${sorted_bam}
+        ls
     }
     runtime {
         docker: "salvacasani/r_filter:latest"
