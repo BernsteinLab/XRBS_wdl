@@ -256,7 +256,7 @@ task qc_stats {
 
         reads_number=(echo (zcat ${fastq1}|wc -l)/4|bc)
 
-        trimmed=$(echo (zcat {trimmed_file}|wc -l)/4|bc)
+        trimmed=(echo (zcat {trimmed_file}|wc -l)/4|bc)
 
         mapped_unique=(echo (cat ${stats_file} | sed 1d | cut -f 2))
 
