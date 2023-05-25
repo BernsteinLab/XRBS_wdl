@@ -276,7 +276,7 @@ task qc_stats {
         disks: "local-disk " + "500" + " SSD"
     }
     output {
-        String reads_number = $reads_number
+        String reads_number = ${reads_number}
         String trimmed_number = $trimmed_number
         String mapped_unique = $mapped_unique
         String msp1Pos_filtered = $msp1Pos_filtered
