@@ -254,19 +254,19 @@ task qc_stats {
     }
     command {
 
-        reads_number=$(echo $(zcat "${fastq1}"|wc -l)/4|bc)
+        echo $(zcat "${fastq1}"|wc -l)/4|bc
 
-        trimmed=$(echo $(zcat "${trimmed_file}"|wc -l)/4|bc)
+        echo $(zcat "${trimmed_file}"|wc -l)/4|bc
 
-        mapped_unique=$(echo $(cat "${stats_file}" | sed 1d | cut -f 2))
+        echo $(cat "${stats_file}" | sed 1d | cut -f 2)
 
-        msp1Pos_filtered=$(echo $(cat "${stats_file}" | sed 1d | cut -f 5))
+        echo $(cat "${stats_file}" | sed 1d | cut -f 5)
 
-        size_filtered=$(echo $(cat "${stats_file}" | sed 1d | cut -f 6))
+        echo $(cat "${stats_file}" | sed 1d | cut -f 6)
 
-        dup_filtered=$(echo $(cat "${stats_file}" | sed 1d | cut -f 7))
+        echo $(cat "${stats_file}" | sed 1d | cut -f 7)
 
-        cpg_sites=$(echo $(zcat "${methylation_call}" | wc -l))
+        echo $(zcat "${methylation_call}" | wc -l)
 
     }
     runtime {
@@ -276,13 +276,14 @@ task qc_stats {
         disks: "local-disk " + "500" + " SSD"
     }
     output {
-        String reads_number = ${reads_number}
-        String trimmed_number = $trimmed_number
-        String mapped_unique = $mapped_unique
-        String msp1Pos_filtered = $msp1Pos_filtered
-        String size_filtered = $size_filtered
-        String dup_filtered = $dup_filtered
-        String cpg_sites = $cpg_sites
+        Array[String] values = read_lines(stdout())
+        String reads_number = values[0]
+        String trimmed_number = values[1]
+        String mapped_unique = values[2]
+        String msp1Pos_filtered = values[3]
+        String size_filtered = values[4]
+        String dup_filtered = values[5]
+        String cpg_sites = values[6]
     }
 }
 
