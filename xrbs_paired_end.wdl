@@ -112,6 +112,9 @@ task trimming {
     }
     runtime {
         docker: "salvacasani/trimming:latest"
+        bootDiskSizeGb: 40
+        memory: "40G"
+        disks: "local-disk " + "500" + " SSD"
     }
     output {
         File cutadapt_report = "${sample_id}_cutadapt_report.txt"

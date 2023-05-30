@@ -17,7 +17,8 @@ RUN apt-get -y install  bedtools \
                         libssl-dev \
 			libz-dev \
 			zlib1g-dev \
-			libxml2-dev
+			libxml2-dev \
+			bc
                                                 
 ## install R-packages
 RUN R -e "install.packages('BiocManager')"
