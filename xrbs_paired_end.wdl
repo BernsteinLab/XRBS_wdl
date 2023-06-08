@@ -50,6 +50,7 @@ workflow XRBS {
 
 	call methylation {input: 
 		filtered_bam = filter.bam,
+        filtered_bam_index = filter.bam_index,
         #filtered_bam = bconv.sorted_bam_out,
 		reference_pos = reference_positions,
         sample_id = sample_id
@@ -219,6 +220,7 @@ task filter {
     }
     output {
         File bam = "${sample_id}.sorted.bam.filter.bam"
+        File bam_index = "${sample_id}.sorted.bam.filter.bam.bai"
         File stats = "${sample_id}.sorted.bam.filter.stats"
     }
 }
@@ -226,6 +228,7 @@ task filter {
 task methylation {
     input {
         File filtered_bam
+        File filtered_bam_index
         File reference_pos
         String sample_id
     }
