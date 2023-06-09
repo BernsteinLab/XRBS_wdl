@@ -15,7 +15,7 @@ RUN apt-get update && \
                         samtools \
                         tabix
 
-RUN pip install pysam==0.8.3
+RUN pip install pysam==0.7.7
 
 # Install bwa
 RUN git clone https://github.com/hovestadt/methylCtools.git 
